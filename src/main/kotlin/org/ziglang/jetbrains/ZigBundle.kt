@@ -1,13 +1,13 @@
-package com.github.marioariasc.zigsupport
+package org.ziglang.jetbrains
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.annotations.PropertyKey
 
 @NonNls
-private const val BUNDLE = "messages.MyBundle"
+private const val BUNDLE = "messages.ZigBundle"
 
-object MyBundle : DynamicBundle(BUNDLE) {
+object ZigBundle : DynamicBundle(BUNDLE) {
 
     @Suppress("SpreadOperator")
     @JvmStatic

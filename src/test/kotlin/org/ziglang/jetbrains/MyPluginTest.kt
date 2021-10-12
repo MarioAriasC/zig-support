@@ -1,4 +1,4 @@
-package com.github.marioariasc.zigsupport
+package org.ziglang.jetbrains
 
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.psi.xml.XmlFile

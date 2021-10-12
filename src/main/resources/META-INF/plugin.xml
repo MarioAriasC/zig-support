@@ -1,18 +1,13 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.marioariasc.zigsupport</id>
-    <name>zig-support</name>
+    <id>org.ziglang.jetbrains</id>
+    <name>Zig Support</name>
     <vendor>marioariasc</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.marioariasc.zigsupport.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.marioariasc.zigsupport.services.MyProjectService"/>
+        <fileType name="Zig" implementationClass="org.ziglang.jetbrains.ZigFileType" fieldName="INSTANCE" language="Zig"
+                  extensions="zig"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.marioariasc.zigsupport.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>

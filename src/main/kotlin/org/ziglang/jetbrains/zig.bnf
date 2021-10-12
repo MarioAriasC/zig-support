@@ -1,0 +1,362 @@
+{
+    parserClass="org.ziglang.jetbrains.psi.parser.ZigParser"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Zig"
+    psiImplClassSuffix="Impl"
+    psiPackage="org.ziglang.jetbrains.psi"
+    psiImplPackage="org.ziglang.jetbrains.psi.impl"
+
+    elementTypeHolderClass="org.ziglang.jetbrains.psi.ZigTypes"
+    elementTypeClass="org.ziglang.jetbrains.psi.ZigElementType"
+    tokens=[
+        PUB='pub'
+        FN='fn'
+        CONST='const'
+        VAR='var'
+        EQUAL='='
+        OR='or'
+        AND='and'
+        EXPORT='export'
+        EXTERN='extern'
+        INLINE='inline'
+        NOINLINE='noinline'
+        THREAD_LOCAL='threadlocal'
+        USING_NAME_SPACE='usingnamespace'
+        ALIGN='align'
+        LINKSECTION='linksection'
+        CALLCONV='callconv'
+        COMPTIME='comptime'
+        ANY_TYPE='anytype'
+        TEST='test'
+        NOSUSPEND='nosuspend'
+        SUSPEND='suspend'
+        DEFER='defer'
+        ERRDEFER='errdefer'
+        FOR='for'
+        WHILE='while'
+        SWITCH='switch'
+        BREAK='break'
+        CONTINUE='continue'
+        RESUME='resume'
+        ASM='asm'
+        VOLATILE='volatile'
+        ANYFRAME='anyframe'
+        ALLOWZERO='allowzero'
+        ASYNC='async'
+        EQUALEQUAL='=='
+        LARROW='<'
+        RARROW='>'
+        EXCLAMATIONMARK='!'
+        EXCLAMATIONMARKEQUAL='!='
+        LARROWEQUAL='<='
+        RARROWEQUAL='>='
+        AMPERSAND='&'
+        CARET='^'
+        PIPE='|'
+        ORELSE='orelse'
+        catch='catch'
+        LARROW2='<<'
+        RARROW2='>>'
+        PLUS='+'
+        MINUS='-'
+        PLUS2='++'
+        PLUSPERCENT='+%'
+        MINUSPERCENT='-%'
+        PIPE2='||'
+        ASTERISK='*'
+        SLASH='/'
+        PERCENT='%'
+        ASTERISK2='**'
+        ASTERISKPERCENT='*%'
+        IF='if'
+        RETURN='return'
+        ELSE='else'
+        LBRACE='{'
+        RBRACE='}'
+        ASTERISKEQUAL='*='
+        SLASHEQUAL='/='
+        PERCENTEQUAL='%='
+        PLUSEQUAL='+='
+        MINUSEQUAL='-='
+        LARROW2EQUAL='<<='
+        RARROW2EQUAL='>>='
+        AMPERSANDEQUAL='&='
+        CARETEQUAL='^='
+        EQUALRARROW='=>'
+        MINUSRARROW='->'
+        PIPEEQUAL='|='
+        ASTERISKPERCENTEQUAL='*%='
+        PLUSPERCENTEQUAL='+%='
+        MINUSPERCENTEQUAL='-%='
+        TILDE='~'
+        DOT='.'
+        DOT2='..'
+        DOT3='...'
+        TRY='try'
+        LBRACKET='['
+        RBRACKET=']'
+        DOTASTERISK='.*'
+        QUESTIONMARK='?'
+        DOTQUESTIONMARK='.?'
+        SEMICOLON=';'
+        LPAREN='('
+        RPAREN=')'
+        COMMA=','
+        COLON=':'
+    ]
+}
+
+root ::= ContainerDocComment? ContainerDeclarations?
+private ContainerDocComment ::= CONTAINER_DOC+
+private ContainerMembers ::= ContainerDeclarations? (ContainerField COMMA)* (ContainerField | ContainerDeclarations)
+private ContainerDeclarations ::= TestDecl ContainerDeclarations? | TopLevelComptime ContainerDeclarations? | DocComment? TopLevelDecl ContainerDeclarations?
+
+TopLevelComptime ::= DocComment? COMPTIME BlockExpr
+
+TestDecl ::= DocComment? TEST STRING_LITERAL_SINGLE? Block
+
+private DocComment ::= COMMENT+
+private TopLevelDecl ::= FnDecl | TopVarDecl | PUB? USING_NAME_SPACE Expr SEMICOLON
+TopVarDecl ::= PUB? (EXPORT | EXTERN STRING_LITERAL_SINGLE?)? THREAD_LOCAL? VarDecl {
+    implements=['com.intellij.psi.PsiNameIdentifierOwner' 'org.ziglang.jetbrains.psi.VarDeclaration']
+    mixin='org.ziglang.jetbrains.reference.TopVarDeclMixin'
+}
+
+FnDecl ::= PUB? (EXPORT | EXTERN STRING_LITERAL_SINGLE? | (INLINE | NOINLINE))? FnProto (SEMICOLON | Block) {
+    pin='FnProto'
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.ziglang.jetbrains.reference.FnMixin'
+}
+
+FnProto ::= FN ID LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK? TypeExpr {
+    pin = 'ID'
+}
+ByteAlign ::= ALIGN LPAREN Expr RPAREN
+LinkSection ::= LINKSECTION LPAREN Expr RPAREN
+CallConv ::= CALLCONV LPAREN Expr RPAREN
+
+ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
+ParamDecl ::= DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType | DOT3
+ParamType ::= ANY_TYPE | TypeExpr
+private TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
+PrefixTypeOp ::= QUESTIONMARK
+    | ANYFRAME MINUSRARROW
+    | SliceTypeStart (ByteAlign | CONST | VOLATILE | ALLOWZERO)*
+    | PtrTypeStart (ALIGN LPAREN Expr (COLON INTEGER COLON INTEGER)? RPAREN | CONST | VOLATILE | ALLOWZERO)*
+    | ArrayTypeStart
+
+SliceTypeStart ::= LBRACKET (COLON Expr)? RBRACKET
+PtrTypeStart ::= ASTERISK | ASTERISK2 | LBRACKET ASTERISK ('c' | COLON Expr)? RBRACKET
+
+ArrayTypeStart ::= LBRACKET Expr (COLON Expr)? RBRACKET
+
+private ErrorUnionExpr ::= SuffixExpr (EXCLAMATIONMARK TypeExpr)?
+private SuffixExpr ::= ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments | PrimaryTypeExpr (SuffixOp | FnCallArguments)*
+SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET | DOT Symbol | DOTASTERISK | DOTQUESTIONMARK
+PrimaryTypeExpr ::= BUILTIN_IDENTIFIER FnCallArguments
+    | CHAR_LITERAL
+    | ContainerDecl
+    | DOT ID
+    | DOT InitList
+    | ErrorSetDecl
+    | FLOAT
+    | FnProto
+    | GroupedExpr
+    | LabeledTypeExpr
+    | Symbol
+    | IfTypeExpr
+    | INTEGER
+    | COMPTIME TypeExpr
+    | ERROR DOT ID
+    | FALSE
+    | NULL
+    | ANYFRAME
+    | TRUE
+    | UNDEFINED
+    | UNREACHABLE
+    | STRING_LITERAL
+    | SwitchExpr
+
+Symbol ::= ID {
+    mixin='org.ziglang.jetbrains.reference.SymbolMixin'
+}
+
+ContainerDecl ::= ContainerDeclAuto | PackedContainerDecl | ExternContainerDecl
+
+private PackedContainerDecl ::= PACKED ContainerDeclType LBRACE ContainerDocComment? ContainerMembers RBRACE {
+    pin = 1
+}
+
+private ExternContainerDecl ::= EXTERN ContainerDeclType LBRACE ContainerDocComment? ContainerMembers RBRACE {
+    pin = 1
+}
+
+private ContainerDeclAuto ::= ContainerDeclType LBRACE ContainerDocComment? ContainerMembers RBRACE {
+    pin = 1
+}
+
+ContainerDeclType ::= STRUCT | OPAQUE | ENUM (LPAREN Expr RPAREN)? | UNION (LPAREN (ENUM (LPAREN Expr RPAREN)? | Expr) RPAREN)?
+
+ErrorSetDecl ::= ERROR LBRACE IdentifierList RBRACE
+
+GroupedExpr ::= LPAREN Expr RPAREN
+
+LabeledTypeExpr ::= BlockLabel Block | BlockLabel? LoopTypeExpr
+
+LoopTypeExpr ::= INLINE? (ForTypeExpr | WhileTypeExpr)
+
+ForTypeExpr ::= ForPrefix TypeExpr (ELSE TypeExpr)?
+WhileTypeExpr ::= WhilePrefix TypeExpr (ELSE Payload? TypeExpr)?
+
+IfTypeExpr ::= IfPrefix TypeExpr (ELSE Payload? TypeExpr)?
+
+IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
+STRING_LITERAL ::= STRING_LITERAL_SINGLE
+FnCallArguments ::= LPAREN ExprList RPAREN
+ExprList ::= (Expr COMMA)* Expr?
+
+VarDecl ::= (CONST | VAR) ID (COLON TypeExpr)? ByteAlign? LinkSection? EqualExpr? SEMICOLON {
+    pin = 6
+}
+
+EqualExpr ::= EQUAL Expr {
+    pin = 1
+}
+
+ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)? {
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.ziglang.jetbrains.reference.ContainerFieldMixin'
+}
+
+Expr ::= BoolOrExpr
+private BoolOrExpr ::= BoolAndExpr (OR BoolAndExpr)*
+private BoolAndExpr ::= CompareExpr (AND CompareExpr)*
+private CompareExpr ::= BitwiseExpr (CompareOp BitwiseExpr)?
+private CompareOp ::= EQUALEQUAL | EXCLAMATIONMARKEQUAL | LARROW | RARROW | LARROWEQUAL | RARROWEQUAL
+private BitwiseExpr ::= BitShiftExpr (BitwiseOp BitShiftExpr)*
+private BitwiseOp ::= AMPERSAND | CARET | PIPE |  orelse | catch Payload?
+Payload ::= PIPE ID PIPE
+
+private BitShiftExpr ::= AdditionExpr (BitShiftOp AdditionExpr)*
+BitShiftOp ::= LARROW2 | RARROW2
+private AdditionExpr ::= MultiplyExpr (AdditionOp MultiplyExpr)*
+AdditionOp ::= PLUS | MINUS | PLUS2 | PLUSPERCENT | MINUSPERCENT
+private MultiplyExpr ::= PrefixExpr (MultiplyOp PrefixExpr)*
+MultiplyOp ::= PIPE2 | ASTERISK | SLASH | PERCENT | ASTERISK2 | ASTERISKPERCENT
+private PrefixExpr ::= PrefixOp* PrimaryExpr
+private PrimaryExpr ::= AsmExpr
+    | IfExpr
+    | BREAK BreakLabel? Expr?
+    | COMPTIME Expr
+    | NOSUSPEND Expr
+    | CONTINUE BreakLabel?
+    | RESUME Expr
+    | RETURN Expr?
+    | BlockLabel? LoopExpr
+    | Block
+    | CurlySuffixExpr
+
+AsmExpr ::= ASM VOLATILE? LPAREN Expr AsmOutput? RPAREN
+AsmOutput ::= COLON AsmOutputList AsmInput?
+
+AsmOutputList ::= (AsmOutputItem COMMA)* AsmOutputItem?
+AsmOutputItem ::= LBRACKET ID RBRACKET STRING_LITERAL LPAREN (MINUSRARROW TypeExpr | ID) RPAREN
+AsmInput ::= COLON AsmInputList AsmClobbers?
+AsmInputList ::= (AsmInputItem COMMA)* AsmInputItem
+AsmInputItem ::= LBRACKET ID RBRACKET STRING_LITERAL LPAREN Expr RPAREN
+AsmClobbers ::= COLON StringList
+StringList ::= (STRING_LITERAL COMMA)* STRING_LITERAL?
+
+BreakLabel ::= COLON ID
+
+LoopExpr ::= INLINE? (ForExpr | WhileExpr)
+ForExpr ::= ForPrefix Expr (ELSE Expr)?
+WhileExpr ::= WhilePrefix Expr (ELSE Payload? Expr)?
+
+private CurlySuffixExpr ::= TypeExpr InitList?
+InitList ::= FieldInitList | LBRACE Expr (COMMA Expr)* COMMA? RBRACE | LBRACE RBRACE
+
+private FieldInitList ::= LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE {
+    pin = 2
+}
+
+FieldInit ::= DOT Symbol EQUAL Expr {
+    pin = 1
+}
+
+IfExpr ::= IfPrefix Expr (ELSE Payload? Expr)?
+IfPrefix ::= IF LPAREN Expr RPAREN PtrPayload?
+PtrPayload ::= PIPE ASTERISK? ID PIPE
+Block ::= LBRACE Statement* RBRACE {
+    pin = 1
+}
+
+BlockExpr ::= BlockLabel? Block
+BlockLabel ::= ID COLON
+Statement ::= LocalVarDecl
+    | COMPTIME BlockExprStatement
+    | NOSUSPEND BlockExprStatement
+    | SUSPEND BlockExprStatement
+    | DEFER BlockExprStatement
+    | ERRDEFER Payload? BlockExprStatement
+    | IfStatement
+    | LabeledStatement
+    | SwitchExpr
+    | AssignStatement
+
+LocalVarDecl ::= COMPTIME? VarDecl {
+    implements = ['com.intellij.psi.PsiNameIdentifierOwner' 'org.ziglang.jetbrains.psi.VarDeclaration']
+    mixin='org.ziglang.jetbrains.reference.LocalVarDecl'
+}
+
+AssignStatement ::= AssignExpr SEMICOLON {
+    pin = 1
+}
+
+IfStatement ::= IfPrefix BlockExpr (ELSE Payload? Statement)? | IfPrefix AssignExpr (SEMICOLON | ELSE Payload? Statement)
+
+LabeledStatement ::= BlockLabel? (Block | LoopStatement)
+
+LoopStatement ::= INLINE? (ForStatement | WhileStatement)
+
+ForStatement ::= ForPrefix BlockExpr (ELSE Statement)? | ForPrefix AssignExpr (SEMICOLON | ELSE Statement)
+
+WhileStatement ::= WhilePrefix BlockExpr (ELSE Payload? Statement)? | WhilePrefix AssignExpr (SEMICOLON | ELSE Payload? Statement)
+
+SwitchExpr ::= SWITCH LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
+SwitchProngList ::= (SwitchProng COMMA)* SwitchProng?
+SwitchProng ::= SwitchCase EQUALRARROW PtrPayload? AssignExpr
+SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
+SwitchItem ::= Expr (DOT3 Expr)?
+
+ForPrefix ::= FOR LPAREN Expr RPAREN PtrIndexPayload
+WhilePrefix ::= WHILE LPAREN Expr RPAREN PtrPayload? WhileContinueExpr?
+
+WhileContinueExpr ::= COLON LPAREN AssignExpr RPAREN
+PtrIndexPayload ::= PIPE ASTERISK? ID (COMMA ID)? PIPE
+
+BlockExprStatement ::= BlockExpr | AssignExpr SEMICOLON
+AssignExpr ::= Expr (AssignOp Expr)?
+AssignOp ::= ASTERISKEQUAL
+    | SLASHEQUAL
+    | PERCENTEQUAL
+    | PLUSEQUAL
+    | MINUSEQUAL
+    | LARROW2EQUAL
+    | RARROW2EQUAL
+    | AMPERSANDEQUAL
+    | CARETEQUAL
+    | PIPEEQUAL
+    | ASTERISKPERCENTEQUAL
+    | PLUSPERCENTEQUAL
+    | MINUSPERCENTEQUAL
+    | EQUAL
+
+PrefixOp ::= EXCLAMATIONMARK
+    | MINUS
+    | TILDE
+    | MINUSPERCENT
+    | AMPERSAND
+    | TRY
+    | AWAIT
