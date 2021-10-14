@@ -31,7 +31,7 @@ abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
         return if(containerType != null) {
             ZigContainerTypeReference(this, node.firstChildNode?.psi!!, containerType)
         } else {
-            ZigTypeReference(this, node.firstChildNode?.psi!!)
+            ZigReference(this, node.firstChildNode?.psi!!)
         }
     }
 }

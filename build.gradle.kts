@@ -1,4 +1,5 @@
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -65,6 +66,13 @@ val generateZigParser = task<GenerateParser>("generateZigParser") {
     targetRoot = "src/main/gen"
     pathToParser = "/org/ziglang/jetbrains/psi/parser/ZigParser.java"
     pathToPsiRoot = "org/ziglang/jetbrains/psi"
+    purgeOldFiles = true
+}
+
+val generateZigLexer = task<GenerateLexer>("generateZigLexer"){
+    source = "src/main/kotlin/org/ziglang/jetbrains/ZigLexer.flex"
+    targetDir = "src/main/gen/org/ziglang/jetbrains/lexer"
+    targetClass = "ZigLexer"
     purgeOldFiles = true
 }
 
@@ -139,6 +147,6 @@ tasks {
     }
 
     withType<KotlinCompile> {
-        dependsOn(generateZigParser)
+        dependsOn(generateZigParser, generateZigLexer)
     }
 }

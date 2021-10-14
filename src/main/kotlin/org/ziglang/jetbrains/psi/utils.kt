@@ -88,3 +88,6 @@ fun isElementAType(element: PsiElement): Boolean =
         element,
         ZigContainerDecl::class.java
     ) != null)) || (element is ZigFnDecl)
+
+fun PsiElement.leftSiblings(): Sequence<PsiElement> =
+    generateSequence(this.prevSibling) { element -> element.prevSibling }
