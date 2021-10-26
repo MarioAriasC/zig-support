@@ -62,16 +62,16 @@ qodana {
 
 // generate code
 val generateZigParser = task<GenerateParser>("generateZigParser") {
-    source = "src/main/kotlin/org/ziglang/jetbrains/zig.bnf"
+    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.bnf"
     targetRoot = "src/main/gen"
-    pathToParser = "/org/ziglang/jetbrains/psi/parser/ZigParser.java"
-    pathToPsiRoot = "org/ziglang/jetbrains/psi"
+    pathToParser = "/org/ziglang/jb/psi/parser/ZigParser.java"
+    pathToPsiRoot = "org/ziglang/jb/psi"
     purgeOldFiles = true
 }
 
 val generateZigLexer = task<GenerateLexer>("generateZigLexer"){
-    source = "src/main/kotlin/org/ziglang/jetbrains/ZigLexer.flex"
-    targetDir = "src/main/gen/org/ziglang/jetbrains/lexer"
+    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.flex"
+    targetDir = "src/main/gen/org/ziglang/jb/lexer"
     targetClass = "ZigLexer"
     purgeOldFiles = true
 }

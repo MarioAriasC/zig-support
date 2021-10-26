@@ -1,21 +1,21 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>org.ziglang.jetbrains</id>
+    <id>org.ziglang.jb</id>
     <name>Zig Support</name>
     <vendor>marioariasc</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Zig" implementationClass="org.ziglang.jetbrains.ZigFileType" fieldName="INSTANCE" language="Zig"
+        <fileType name="Zig" implementationClass="org.ziglang.jb.ZigFileType" fieldName="INSTANCE" language="Zig"
                   extensions="zig"/>
-        <lang.parserDefinition language="Zig" implementationClass="org.ziglang.jetbrains.ZigParserDefinition"/>
-        <lang.syntaxHighlighter implementationClass="org.ziglang.jetbrains.ZigSyntaxHighLighter" language="Zig"/>
-        <completion.contributor language="Zig"
+        <lang.parserDefinition language="Zig" implementationClass="org.ziglang.jb.ZigParserDefinition"/>
+        <lang.syntaxHighlighter implementationClass="org.ziglang.jb.ZigSyntaxHighLighter" language="Zig"/>
+        <!--<completion.contributor language="Zig"
                                 implementationClass="org.ziglang.jetbrains.completion.ZigCompletionContributor"/>
         <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>
         <annotator language="Zig" implementationClass="org.ziglang.jetbrains.ZigHighlightAnnotator"/>
         <psi.referenceContributor language="Zig"
-                                  implementation="org.ziglang.jetbrains.reference.ZigReferenceContributor"/>
+                                  implementation="org.ziglang.jetbrains.reference.ZigReferenceContributor"/>-->
     </extensions>
 </idea-plugin>
