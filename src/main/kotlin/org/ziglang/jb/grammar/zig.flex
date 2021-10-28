@@ -61,6 +61,7 @@ char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
 CHAR_LITERAL=\' {char_char} \'
 STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
 STRING_LITERAL_SINGLE=\"{STRING_CHAR}*\"
+LINE_STRING=(\\\\ [^\n]* [ \n]*)*
 
 bin= [01]
 bin_= '_'? {bin}
@@ -206,6 +207,7 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   {BUILTIN_IDENTIFIER}        {return BUILTIN_IDENTIFIER;}
   {ID}                       { return ID; }
   {STRING_LITERAL_SINGLE}      { return STRING_LITERAL_SINGLE; }
+  {LINE_STRING}                 { return LINE_STRING; }
 
 }
 
