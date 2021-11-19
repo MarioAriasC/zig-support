@@ -1,4 +1,6 @@
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -7,13 +9,15 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.30"
+    id("org.jetbrains.kotlin.jvm") version "1.5.31"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij") version "1.1.6"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.0"
     // Gradle Qodana Plugin
     id("org.jetbrains.qodana") version "0.1.12"
+    // Grammar Kit
+    id("org.jetbrains.grammarkit") version "2021.1.3"
 }
 
 group = properties("pluginGroup")
@@ -22,6 +26,12 @@ version = properties("pluginVersion")
 // Configure project's dependencies
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    main {
+        java.srcDirs("src/main/gen")
+    }
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -48,6 +58,22 @@ qodana {
     reportPath.set(projectDir.resolve("build/reports/inspections").canonicalPath)
     saveReport.set(true)
     showReport.set(System.getenv("QODANA_SHOW_REPORT").toBoolean())
+}
+
+// generate code
+val generateZigParser = task<GenerateParser>("generateZigParser") {
+    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.bnf"
+    targetRoot = "src/main/gen"
+    pathToParser = "/org/ziglang/jb/psi/parser/ZigParser.java"
+    pathToPsiRoot = "org/ziglang/jb/psi"
+    purgeOldFiles = true
+}
+
+val generateZigLexer = task<GenerateLexer>("generateZigLexer"){
+    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.flex"
+    targetDir = "src/main/gen/org/ziglang/jb/lexer"
+    targetClass = "ZigLexer"
+    purgeOldFiles = true
 }
 
 tasks {
@@ -118,5 +144,9 @@ tasks {
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
+    }
+
+    withType<KotlinCompile> {
+        dependsOn(generateZigParser, generateZigLexer)
     }
 }

@@ -1,18 +1,21 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.marioariasc.zigsupport</id>
-    <name>zig-support</name>
+    <id>org.ziglang.jb</id>
+    <name>Zig Support</name>
     <vendor>marioariasc</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.marioariasc.zigsupport.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.marioariasc.zigsupport.services.MyProjectService"/>
+        <fileType name="Zig" implementationClass="org.ziglang.jb.ZigFileType" fieldName="INSTANCE" language="Zig"
+                  extensions="zig"/>
+        <lang.parserDefinition language="Zig" implementationClass="org.ziglang.jb.ZigParserDefinition"/>
+        <lang.syntaxHighlighter implementationClass="org.ziglang.jb.ZigSyntaxHighLighter" language="Zig"/>
+        <!--<completion.contributor language="Zig"
+                                implementationClass="org.ziglang.jetbrains.completion.ZigCompletionContributor"/>
+        <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>
+        <annotator language="Zig" implementationClass="org.ziglang.jetbrains.ZigHighlightAnnotator"/>
+        <psi.referenceContributor language="Zig"
+                                  implementation="org.ziglang.jetbrains.reference.ZigReferenceContributor"/>-->
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.marioariasc.zigsupport.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
