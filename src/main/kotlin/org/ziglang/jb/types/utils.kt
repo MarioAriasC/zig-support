@@ -155,9 +155,16 @@ class Context(private val visitedTypes: MutableMap<PsiElement, Type?>, val unkno
     fun getTypeFromImport(element: PsiElement): StructType? {
         val literal = PsiTreeUtil.findChildOfType(element, ZigStringLiteral::class.java)
         val path = literal?.firstChild?.text?.removeSurrounding("\"") ?: return null
-        val psiFile =
-            FilenameIndex.getFilesByName(element.project, "$path.zig", GlobalSearchScope.projectScope(element.project))
-                .first()
-        return getStructType(psiFile)
+        return try {
+            val psiFile =
+                FilenameIndex.getFilesByName(
+                    element.project,
+                    "$path.zig",
+                    GlobalSearchScope.projectScope(element.project)
+                ).first()
+            getStructType(psiFile)
+        } catch (e: NoSuchElementException) {
+            null
+        }
     }
 }

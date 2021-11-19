@@ -56,8 +56,9 @@ hex = [0-9a-fA-F]
 
 ID=[A-Za-z_][A-Za-z0-9_]* | "@\"" {STRING_CHAR}* \"
 BUILTIN_IDENTIFIER="@"[A-Za-z_][A-Za-z0-9_]*
-CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\"]
-char_char={mb_utf8_literal} | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
+//CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\\\"]
+CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nrt\'\\\"]
+char_char=[a-zA-Z_\U0000A0-\U10ffff] | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
 CHAR_LITERAL=\' {char_char} \'
 STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
 STRING_LITERAL_SINGLE=\"{STRING_CHAR}*\"
@@ -196,18 +197,18 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   ","                        { return COMMA; }
   ":"                        { return COLON; }
   "await"                    { return AWAIT; }
-  {CHAR_LITERAL}      { return CHAR_LITERAL; }
+  {CHAR_LITERAL}              { return CHAR_LITERAL; }
 
   {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }
-        {LINE_COMMENT}             {}
+  {LINE_COMMENT}             {return COMMENT;}
 
   {FLOAT}                    {return FLOAT;}
   {INTEGER}                  { return INTEGER; }
   {BUILTIN_IDENTIFIER}        {return BUILTIN_IDENTIFIER;}
-  {ID}                       { return ID; }
+  {ID}                         { return ID; }
   {STRING_LITERAL_SINGLE}      { return STRING_LITERAL_SINGLE; }
-  {LINE_STRING}                 { return LINE_STRING; }
+  {LINE_STRING}                { return LINE_STRING; }
 
 }
 

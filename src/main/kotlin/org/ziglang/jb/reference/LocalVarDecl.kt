@@ -8,7 +8,7 @@ import org.ziglang.jb.psi.VarDeclaration
 import org.ziglang.jb.psi.ZigTypes
 import org.ziglang.jb.psi.isContainerType
 
-open class LocalVarDecl(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameIdentifierOwner, VarDeclaration {
+abstract class LocalVarDecl(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameIdentifierOwner, VarDeclaration {
     override fun setName(name: String): PsiElement {
         TODO("Not yet implemented")
     }

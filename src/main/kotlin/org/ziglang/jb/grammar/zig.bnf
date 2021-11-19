@@ -109,7 +109,7 @@
 
 root ::= ContainerDocComment? ContainerDeclarations?
 private ContainerDocComment ::= CONTAINER_DOC+
-private ContainerMembers ::= ContainerDeclarations? (ContainerField COMMA)* (ContainerField | ContainerDeclarations)
+private ContainerMembers ::= ContainerDeclarations? (ContainerField COMMA)* (ContainerField | ContainerDeclarations)?
 private ContainerDeclarations ::= TestDecl ContainerDeclarations? | TopLevelComptime ContainerDeclarations? | DocComment? TopLevelDecl ContainerDeclarations?
 
 TopLevelComptime ::= DocComment? COMPTIME BlockExpr
@@ -129,7 +129,7 @@ FnDecl ::= PUB? (EXPORT | EXTERN STRING_LITERAL_SINGLE? | (INLINE | NOINLINE))? 
     mixin='org.ziglang.jb.reference.FnMixin'
 }
 
-FnProto ::= FN ID LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK? TypeExpr {
+FnProto ::= FN ID? LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK? TypeExpr {
     pin = 'ID'
 }
 ByteAlign ::= ALIGN LPAREN Expr RPAREN
@@ -153,7 +153,11 @@ ArrayTypeStart ::= LBRACKET Expr (COLON Expr)? RBRACKET
 
 private ErrorUnionExpr ::= SuffixExpr (EXCLAMATIONMARK TypeExpr)?
 private SuffixExpr ::= ASYNC PrimaryTypeExpr SuffixOp* FnCallArguments | PrimaryTypeExpr (SuffixOp | FnCallArguments)*
-SuffixOp ::= LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET | DOT Symbol | DOTASTERISK | DOTQUESTIONMARK
+SuffixOp ::=
+    LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
+    | DOT Symbol
+    | DOTASTERISK
+    | DOTQUESTIONMARK
 PrimaryTypeExpr ::= BUILTIN_IDENTIFIER FnCallArguments
     | CHAR_LITERAL
     | ContainerDecl
@@ -275,11 +279,14 @@ ForExpr ::= ForPrefix Expr (ELSE Expr)?
 WhileExpr ::= WhilePrefix Expr (ELSE Payload? Expr)?
 
 private CurlySuffixExpr ::= TypeExpr InitList?
-InitList ::= FieldInitList | LBRACE Expr (COMMA Expr)* COMMA? RBRACE | LBRACE RBRACE
+InitList ::=
+     LBRACE Expr (COMMA Expr)* COMMA? RBRACE
+    | LBRACE RBRACE
+    | LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
 
-private FieldInitList ::= LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE {
-    pin = 2
-}
+/*private FieldInitList ::= LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE {
+//    pin = 2
+}*/
 
 FieldInit ::= DOT Symbol EQUAL Expr {
     pin = 1

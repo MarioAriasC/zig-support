@@ -3,11 +3,8 @@ package org.ziglang.jb
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
-import com.intellij.openapi.fileTypes.SyntaxHighlighter
+import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.tree.IElementType
 import org.ziglang.jb.lexer.ZigLexerAdapter
 import org.ziglang.jb.psi.ZigTypes
@@ -70,27 +67,49 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
         ZigTypes.WHILE
     )
 
+    private val STRINGS = listOf(ZigTypes.STRING_LITERAL_SINGLE, ZigTypes.LINE_STRING, ZigTypes.CHAR_LITERAL)
+
+    private val COMMENTS = listOf(ZigTypes.CONTAINER_DOC, ZigTypes.COMMENT)
+
+    private val NUMBERS = listOf(ZigTypes.INTEGER, ZigTypes.FLOAT)
+
+
     private val keyword =
-        arrayOf(TextAttributesKey.createTextAttributesKey("ZIG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
+        arrayOf(createTextAttributesKey("ZIG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
 
     private val builtinFunctions = arrayOf(
-        TextAttributesKey.createTextAttributesKey(
+        createTextAttributesKey(
             "ZIG_BUILTIN_FUNCTIONS",
             DefaultLanguageHighlighterColors.STATIC_METHOD
         )
     )
 
+    private val strings =
+        arrayOf(createTextAttributesKey("ZIG_STRING"), DefaultLanguageHighlighterColors.STRING)
+
+    private val comments =
+        arrayOf(createTextAttributesKey("ZIG_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT))
+
+    private val numbers = arrayOf(createTextAttributesKey("ZIG_NUMBER", DefaultLanguageHighlighterColors.NUMBER))
+
+    private val semicolon =
+        arrayOf(createTextAttributesKey("ZIG_SEMICOLON"), DefaultLanguageHighlighterColors.SEMICOLON)
+
+    private val comma = arrayOf(createTextAttributesKey("ZIG_COMMA"), DefaultLanguageHighlighterColors.COMMA);
+
     override fun getHighlightingLexer(): Lexer = ZigLexerAdapter()
 
-    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> = when (tokenType) {
-        in KEYWORDS -> keyword
-        ZigTypes.BUILTIN_IDENTIFIER -> builtinFunctions
-        else -> emptyArray()
+    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
+//        println("tokenType = ${tokenType}")
+        return when (tokenType) {
+            ZigTypes.BUILTIN_IDENTIFIER -> builtinFunctions
+            in KEYWORDS -> keyword
+            in STRINGS -> strings
+            in COMMENTS -> comments
+            in NUMBERS -> numbers
+            ZigTypes.SEMICOLON -> semicolon
+            ZigTypes.COMMA -> comma
+            else -> emptyArray()
+        }
     }
-}
-
-class ZigSyntaxHighlighterFactory : SyntaxHighlighterFactory() {
-    override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter =
-        ZigSyntaxHighLighter
-
 }
