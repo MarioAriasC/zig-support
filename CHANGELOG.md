@@ -1,7 +1,7 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # zig-support Changelog
-
+## [Unreleased]
 ## [0.0.1]
 ### Added
 - Initial parser and lexer implementation
