@@ -9,13 +9,13 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    id("org.jetbrains.kotlin.jvm") version "1.6.0"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.1.6"
+    id("org.jetbrains.intellij") version "1.3.0"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "1.3.0"
+    id("org.jetbrains.changelog") version "1.3.1"
     // Gradle Qodana Plugin
-    id("org.jetbrains.qodana") version "0.1.12"
+    id("org.jetbrains.qodana") version "0.1.13"
     // Grammar Kit
     id("org.jetbrains.grammarkit") version "2021.1.3"
 }
@@ -118,9 +118,9 @@ tasks {
         })
     }
 
-    runPluginVerifier {
+    /*runPluginVerifier {
         ideVersions.set(properties("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
-    }
+    }*/
 
     // Configure UI tests plugin
     // Read more: https://github.com/JetBrains/intellij-ui-test-robot
