@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>org.ziglang.jb</id>
     <name>Zig Support</name>
-    <vendor>marioariasc</vendor>
+    <vendor>Mario Arias</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
