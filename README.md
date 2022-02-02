@@ -7,10 +7,6 @@
 <!-- Plugin description -->
 Support for the [Zig Programming Language](https://ziglang.org/)
 
-This plugin is based on two previous plugins:
-- [ZigLang](https://plugins.jetbrains.com/plugin/17143-ziglang) by [Edison Su](https://github.com/sudison)
-- [Zig](https://plugins.jetbrains.com/plugin/10560-zig) by [Tesla Zhang](https://github.com/ice1000)
-
 ## Features
 - Basic language syntax rendering
 
@@ -30,7 +26,11 @@ This plugin is based on two previous plugins:
   Download the [latest release](https://github.com/MarioAriasC/zig-support/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
+## Acknowledgments
 
+This plugin is based on two previous plugins:
+- [ZigLang](https://plugins.jetbrains.com/plugin/17143-ziglang) by [Edison Su](https://github.com/sudison)
+- [Zig](https://plugins.jetbrains.com/plugin/10560-zig) by [Tesla Zhang](https://github.com/ice1000)
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
 
