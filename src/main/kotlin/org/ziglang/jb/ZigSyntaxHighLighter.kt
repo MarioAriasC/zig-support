@@ -38,14 +38,12 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
         ZigTypes.ERROR,
         ZigTypes.EXPORT,
         ZigTypes.EXTERN,
-        ZigTypes.FALSE,
         ZigTypes.FOR,
         ZigTypes.IF,
         ZigTypes.INLINE,
         ZigTypes.NOALIAS,
         ZigTypes.NOSUSPEND,
         ZigTypes.NOINLINE,
-        ZigTypes.NULL,
         ZigTypes.OPAQUE,
         ZigTypes.OR,
         ZigTypes.ORELSE,
@@ -56,9 +54,7 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
         ZigTypes.SUSPEND,
         ZigTypes.SWITCH,
         ZigTypes.THREAD_LOCAL,
-        ZigTypes.TRUE,
         ZigTypes.TRY,
-        ZigTypes.UNDEFINED,
         ZigTypes.UNION,
         ZigTypes.UNREACHABLE,
         ZigTypes.USING_NAME_SPACE,
@@ -95,7 +91,7 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
     private val semicolon =
         arrayOf(createTextAttributesKey("ZIG_SEMICOLON"), DefaultLanguageHighlighterColors.SEMICOLON)
 
-    private val comma = arrayOf(createTextAttributesKey("ZIG_COMMA"), DefaultLanguageHighlighterColors.COMMA);
+    private val comma = arrayOf(createTextAttributesKey("ZIG_COMMA"), DefaultLanguageHighlighterColors.COMMA)
 
     override fun getHighlightingLexer(): Lexer = ZigLexerAdapter()
 

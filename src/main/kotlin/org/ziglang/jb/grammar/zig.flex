@@ -93,10 +93,6 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   "enum"                     {return ENUM;}
   "union"                    {return UNION;}
   "error"                    {return ERROR;}
-  "false"                    {return FALSE;}
-  "true"                     {return TRUE;}
-  "null"                     {return NULL;}
-  "undefined"                {return UNDEFINED;}
   "unreachable"              {return UNREACHABLE;}
   "noalias"                  {return NOALIAS;}
 
@@ -197,7 +193,15 @@ INTEGER= "0b" {bin_int} | "0o" {oct_int} | "0x" {hex_int} | {dec_int}
   ","                        { return COMMA; }
   ":"                        { return COLON; }
   "await"                    { return AWAIT; }
-  {CHAR_LITERAL}              { return CHAR_LITERAL; }
+  "+|"                       { return PLUSPIPE; }
+  "-|"                       { return MINUSPIPE; }
+  "*|"                       { return ASTERISKPIPE; }
+  "<<|"                      { return LARROW2PIPE; }
+  "+|="                      { return PLUSPIPEEQUAL; }
+  "-|="                      { return MINUSPIPEEQUAL; }
+  "*|="                      { return ASTERISKPIPEEQUAL; }
+  "<<|="                     { return LARROW2PIPEEQUAL; }
+  {CHAR_LITERAL}             { return CHAR_LITERAL; }
 
   {CONTAINER_DOC}            { return CONTAINER_DOC; }
   {COMMENT}                  { return COMMENT; }

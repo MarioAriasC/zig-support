@@ -9,9 +9,9 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.6.0"
+    id("org.jetbrains.kotlin.jvm") version "1.6.10"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.3.0"
+    id("org.jetbrains.intellij") version "1.3.1"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
     // Gradle Qodana Plugin
@@ -69,7 +69,7 @@ val generateZigParser = task<GenerateParser>("generateZigParser") {
     purgeOldFiles = true
 }
 
-val generateZigLexer = task<GenerateLexer>("generateZigLexer"){
+val generateZigLexer = task<GenerateLexer>("generateZigLexer") {
     source = "src/main/kotlin/org/ziglang/jb/grammar/zig.flex"
     targetDir = "src/main/gen/org/ziglang/jb/lexer"
     targetClass = "ZigLexer"
@@ -129,6 +129,7 @@ tasks {
         systemProperty("ide.mac.message.dialogs.as.sheets", "false")
         systemProperty("jb.privacy.policy.text", "<!--999.999-->")
         systemProperty("jb.consents.confirmation.enabled", "false")
+        systemProperty("grammar.kit.gpub.max.level", 10000)
     }
 
     signPlugin {
