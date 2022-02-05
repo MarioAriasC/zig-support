@@ -104,10 +104,18 @@
         RPAREN=')'
         COMMA=','
         COLON=':'
+        PLUSPIPE='+|'
+        MINUSPIPE='-|'
+        ASTERISKPIPE='*|'
+        LARROW2PIPE='<<|'
+        PLUSPIPEEQUAL='+|='
+        MINUSPIPEEQUAL='-|='
+        ASTERISKPIPEEQUAL='*|='
+        LARROW2PIPEEQUAL='<<|='
     ]
 }
 
-root ::= ContainerDocComment? ContainerDeclarations?
+root ::= ContainerDocComment? ContainerMembers?
 private ContainerDocComment ::= CONTAINER_DOC+
 private ContainerMembers ::= ContainerDeclarations? (ContainerField COMMA)* (ContainerField | ContainerDeclarations)?
 private ContainerDeclarations ::= TestDecl ContainerDeclarations? | TopLevelComptime ContainerDeclarations? | DocComment? TopLevelDecl ContainerDeclarations?
@@ -173,11 +181,7 @@ PrimaryTypeExpr ::= BUILTIN_IDENTIFIER FnCallArguments
     | INTEGER
     | COMPTIME TypeExpr
     | ERROR DOT ID
-    | FALSE
-    | NULL
     | ANYFRAME
-    | TRUE
-    | UNDEFINED
     | UNREACHABLE
     | STRING_LITERAL
     | SwitchExpr
@@ -243,11 +247,11 @@ private BitwiseOp ::= AMPERSAND | CARET | PIPE |  orelse | catch Payload?
 Payload ::= PIPE ID PIPE
 
 private BitShiftExpr ::= AdditionExpr (BitShiftOp AdditionExpr)*
-BitShiftOp ::= LARROW2 | RARROW2
+BitShiftOp ::= LARROW2 | RARROW2 | LARROW2PIPE
 private AdditionExpr ::= MultiplyExpr (AdditionOp MultiplyExpr)*
-AdditionOp ::= PLUS | MINUS | PLUS2 | PLUSPERCENT | MINUSPERCENT
+AdditionOp ::= PLUS | MINUS | PLUS2 | PLUSPERCENT | MINUSPERCENT | PLUSPIPE | MINUSPIPE
 private MultiplyExpr ::= PrefixExpr (MultiplyOp PrefixExpr)*
-MultiplyOp ::= PIPE2 | ASTERISK | SLASH | PERCENT | ASTERISK2 | ASTERISKPERCENT
+MultiplyOp ::= PIPE2 | ASTERISK | SLASH | PERCENT | ASTERISK2 | ASTERISKPERCENT | ASTERISKPIPE
 private PrefixExpr ::= PrefixOp* PrimaryExpr
 private PrimaryExpr ::= AsmExpr
     | IfExpr
@@ -359,6 +363,10 @@ AssignOp ::= ASTERISKEQUAL
     | PLUSPERCENTEQUAL
     | MINUSPERCENTEQUAL
     | EQUAL
+    | PLUSPIPEEQUAL
+    | MINUSPIPEEQUAL
+    | ASTERISKPIPEEQUAL
+    | LARROW2PIPEEQUAL
 
 PrefixOp ::= EXCLAMATIONMARK
     | MINUS

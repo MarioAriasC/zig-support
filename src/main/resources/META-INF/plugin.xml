@@ -11,6 +11,7 @@
                   extensions="zig"/>
         <lang.parserDefinition language="Zig" implementationClass="org.ziglang.jb.ZigParserDefinition"/>
         <lang.syntaxHighlighter implementationClass="org.ziglang.jb.ZigSyntaxHighLighter" language="Zig"/>
+        <lang.commenter language="Zig" implementationClass="org.ziglang.jb.editor.ZigCommenter"/>
         <!--<completion.contributor language="Zig"
                                 implementationClass="org.ziglang.jetbrains.completion.ZigCompletionContributor"/>
         <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>

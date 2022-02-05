@@ -69,7 +69,7 @@ val generateZigParser = task<GenerateParser>("generateZigParser") {
     purgeOldFiles = true
 }
 
-val generateZigLexer = task<GenerateLexer>("generateZigLexer"){
+val generateZigLexer = task<GenerateLexer>("generateZigLexer") {
     source = "src/main/kotlin/org/ziglang/jb/grammar/zig.flex"
     targetDir = "src/main/gen/org/ziglang/jb/lexer"
     targetClass = "ZigLexer"
@@ -129,6 +129,7 @@ tasks {
         systemProperty("ide.mac.message.dialogs.as.sheets", "false")
         systemProperty("jb.privacy.policy.text", "<!--999.999-->")
         systemProperty("jb.consents.confirmation.enabled", "false")
+        systemProperty("grammar.kit.gpub.max.level", 10000)
     }
 
     signPlugin {
