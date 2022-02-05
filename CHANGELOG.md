@@ -7,9 +7,8 @@
 ## [0.0.2]
 ### Added
 - Improve parser: More language constructs are supported
-- Support for 0.9.0
-    - Saturating arithmetic operators (`+|`,`-|`,`*|`,`<<|`,`+|=`,`-|=`,`*|=` and `<<|=`)
-    - Move `false`, `true`, `null` and `undefined` out of the keywords
+- Support for 0.9.0 - Saturating arithmetic operators (`+|`,`-|`,`*|`,`<<|`,`+|=`,`-|=`,`*|=` and `<<|=`) 
+- Support for 0.9.0 - Move `false`, `true`, `null` and `undefined` out of the keywords
 - Implement Line Comment/Uncomment
 
 ### Known issues
