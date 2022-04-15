@@ -33,8 +33,7 @@ class ZigParserDefinition : ParserDefinition {
     override fun getStringLiteralElements(): TokenSet = ZigTokenType.STRINGS
 
     override fun createElement(node: ASTNode?): PsiElement = ZigTypes.Factory.createElement(node)
-
-    override fun createFile(viewProvider: FileViewProvider?): PsiFile = ZigFile(viewProvider!!)
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = ZigFile(viewProvider)
 
     override fun getWhitespaceTokens(): TokenSet = TokenSet.WHITE_SPACE
 

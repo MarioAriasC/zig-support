@@ -3,6 +3,9 @@
 # zig-support Changelog
 
 ## [Unreleased]
+### Fixed
+- Support for the new IDEA platform version (211 and onwards).
+- Fix issue [#7](https://github.com/MarioAriasC/zig-support/issues/7)
 
 ## [0.0.2]
 ### Added
