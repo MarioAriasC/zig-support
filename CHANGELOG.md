@@ -3,6 +3,8 @@
 # zig-support Changelog
 
 ## [Unreleased]
+
+## [0.0.3]
 ### Fixed
 - Support for the new IDEA platform version (211 and onwards).
 - Fix issue [#7](https://github.com/MarioAriasC/zig-support/issues/7)
@@ -28,4 +30,4 @@
 ### Known issues
 - There are still certain problems with the parser
     - `\\` Line strings sometimes aren't parsed correctly.
-    - `asm volatile` sometimes aren't parsed correctly. 
+    - `asm volatile` sometimes aren't parsed correctly.
