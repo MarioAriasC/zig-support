@@ -2,6 +2,7 @@ package org.ziglang.jb.reference
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.intellij.psi.TokenType
 import com.intellij.psi.util.PsiTreeUtil
@@ -18,8 +19,11 @@ abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
                 val typeExpr = PsiTreeUtil.findSiblingBackward(parent, ZigTypes.PRIMARY_TYPE_EXPR, null)
                 containerType = (typeExpr as ZigPrimaryTypeExpr).getTypeFromChain(parent)
             } else if (parent is ZigFieldInit) {
-                val typeExpr = PsiTreeUtil.findSiblingBackward(parent.parent, ZigTypes.PRIMARY_TYPE_EXPR, null)
-                containerType = (typeExpr as ZigPrimaryTypeExpr).inference()
+                val typeExpr: PsiElement? =
+                    PsiTreeUtil.findSiblingBackward(parent.parent, ZigTypes.PRIMARY_TYPE_EXPR, null)
+                if (typeExpr != null) {
+                    containerType = (typeExpr as ZigPrimaryTypeExpr).inference()
+                }
             }
         } else if (parent is ZigPrimaryTypeExpr) {
             if (parent.prevSiblingTypeIgnoring(ZigTypes.COLON, TokenType.WHITE_SPACE) != null) {
@@ -28,7 +32,7 @@ abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
                 return ZigTypeReference(this, node.firstChildNode?.psi!!)
             }
         }
-        return if(containerType != null) {
+        return if (containerType != null) {
             ZigContainerTypeReference(this, node.firstChildNode?.psi!!, containerType)
         } else {
             ZigReference(this, node.firstChildNode?.psi!!)
