@@ -3,9 +3,14 @@
 # zig-support Changelog
 
 ## [Unreleased]
+
+## [0.0.4]
+### Added
 - Improve parser: `asm` expressions parsed correctly
+
 ### Fixed
 - Support for the new IDEA platform version (211 to 221).
+
 ## [0.0.3]
 ### Fixed
 - Support for the new IDEA platform version (211 and onwards).
