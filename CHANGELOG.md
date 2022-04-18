@@ -5,10 +5,7 @@
 ## [Unreleased]
 
 ## [0.0.4]
-- Improve parser: `asm` expressions parsed correctly
-
-## [0.0.4]
-- Improve parser: `asm` expressions parsed correctly
+### Added
 - Improve parser: `asm` expressions parsed correctly
 
 ### Fixed
