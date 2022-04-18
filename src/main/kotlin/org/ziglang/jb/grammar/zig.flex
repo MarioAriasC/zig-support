@@ -62,7 +62,7 @@ char_char=[a-zA-Z_\U0000A0-\U10ffff] | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_
 CHAR_LITERAL=\' {char_char} \'
 STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
 STRING_LITERAL_SINGLE=\"{STRING_CHAR}*\"
-LINE_STRING=(\\\\ [^\n]* [ \n]*)*
+LINE_STRING=(\\\\ [^\n]* [ \n]*)+
 
 bin= [01]
 bin_= '_'? {bin}
