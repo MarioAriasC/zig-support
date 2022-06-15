@@ -18,6 +18,12 @@ class ZigTypeReference(element: PsiElement, id: PsiElement) : ZigIdReference(ele
     }
 
     override fun getVariants(): Array<Any> {
-        return (findTypesInsideFile(element).map { named -> createLookup(named.nameIdentifier?.text!!) } + ZigLang.primitiveTypesLookup).toTypedArray()
+        return (findTypesInsideFile(element).flatMap { named ->
+            try {
+                listOf(createLookup(named.nameIdentifier?.text!!))
+            } catch (e: NullPointerException) {
+                emptyList()
+            }
+        } + ZigLang.primitiveTypesLookup).toTypedArray()
     }
 }

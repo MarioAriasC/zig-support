@@ -11,7 +11,7 @@ Support for the [Zig Programming Language](https://ziglang.org/)
 - Basic language syntax rendering
 
 ![](https://plugins.jetbrains.com/files/18062/screenshot_17294790-9e20-4c5f-8d41-668bebef80d8)
-
+- Comment/Uncomment Zig code
 <!-- Plugin description end -->
 
 ## Installation

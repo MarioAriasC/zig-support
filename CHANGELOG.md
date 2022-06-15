@@ -3,6 +3,8 @@
 # zig-support Changelog
 
 ## [Unreleased]
+### Fixed
+- Fix issue [#12](https://github.com/MarioAriasC/zig-support/issues/12)
 
 ## [0.0.4]
 ### Added
