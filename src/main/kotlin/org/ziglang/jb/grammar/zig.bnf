@@ -221,6 +221,7 @@ IfTypeExpr ::= IfPrefix TypeExpr (ELSE Payload? TypeExpr)?
 
 IdentifierList ::= (DocComment? ID COMMA)* (DocComment? ID)?
 STRING_LITERAL ::= STRING_LITERAL_SINGLE | LINE_STRING+
+//STRING_LITERAL ::= STRING_LITERAL_SINGLE
 FnCallArguments ::= LPAREN ExprList RPAREN
 ExprList ::= (Expr COMMA)* Expr?
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templateSet group="Zig">
+    <template description="Create an import using the @import function"
+              name="import" value="const $NAME$ = @import(&quot;$NAME_COPY$&quot;);">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="NAME_COPY" expression="NAME" defaultValue="" alwaysStopAt="true"/>
+
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Debug Print" name="sdp"
+              value="std.debug.print(&quot;$END$&quot;, .{});">
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Log Info" name="sli"
+              value="std.log.info(&quot;$END$&quot;, .{});">
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+</templateSet>

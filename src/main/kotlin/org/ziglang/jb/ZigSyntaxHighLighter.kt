@@ -69,6 +69,8 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
 
     private val NUMBERS = listOf(ZigTypes.INTEGER, ZigTypes.FLOAT)
 
+    private val LABELS = listOf(ZigTypes.BREAK_LABEL, ZigTypes.BLOCK_LABEL)
+
 
     private val keyword =
         arrayOf(createTextAttributesKey("ZIG_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
@@ -93,6 +95,8 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
 
     private val comma = arrayOf(createTextAttributesKey("ZIG_COMMA"), DefaultLanguageHighlighterColors.COMMA)
 
+    private val label = arrayOf(createTextAttributesKey("ZIG_LABEL"), DefaultLanguageHighlighterColors.LABEL)
+
     override fun getHighlightingLexer(): Lexer = ZigLexerAdapter()
 
     override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
@@ -105,6 +109,7 @@ object ZigSyntaxHighLighter : SyntaxHighlighterBase() {
             in NUMBERS -> numbers
             ZigTypes.SEMICOLON -> semicolon
             ZigTypes.COMMA -> comma
+            in LABELS -> label
             else -> emptyArray()
         }
     }

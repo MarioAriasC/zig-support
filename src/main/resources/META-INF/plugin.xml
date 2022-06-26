@@ -12,6 +12,12 @@
         <lang.parserDefinition language="Zig" implementationClass="org.ziglang.jb.ZigParserDefinition"/>
         <lang.syntaxHighlighter implementationClass="org.ziglang.jb.ZigSyntaxHighLighter" language="Zig"/>
         <lang.commenter language="Zig" implementationClass="org.ziglang.jb.editor.ZigCommenter"/>
+        <lang.braceMatcher language="Zig" implementationClass="org.ziglang.jb.editor.ZigBraceMatcher"/>
+        <lang.quoteHandler language="Zig" implementationClass="org.ziglang.jb.editor.ZigQuoteHandler"/>
+
+        <!--Live templates-->
+        <defaultLiveTemplates file="liveTemplates/Zig"/>
+        <liveTemplateContext implementation="org.ziglang.jb.editor.ZigCodeContextType"/>
         <!--<completion.contributor language="Zig"
                                 implementationClass="org.ziglang.jetbrains.completion.ZigCompletionContributor"/>
         <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>

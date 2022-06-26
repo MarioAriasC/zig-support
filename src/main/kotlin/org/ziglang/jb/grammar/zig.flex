@@ -22,7 +22,7 @@ import static org.ziglang.jb.psi.ZigTypes.*;
 %type IElementType
 %unicode
 
-EOL=\R
+/*EOL=\R
 ox80_oxBF=[\200-\277]
 oxF4='\364'
 ox80_ox8F=[\200-\217]
@@ -35,8 +35,8 @@ ox80_ox9F=[\200-\237]
 oxE1_oxEC=[\341-\354]
 oxE0='\340'
 oxA0_oxBF=[\240-\277]
-oxC2_oxDF=[\302-\337]
-mb_utf8_literal=
+oxC2_oxDF=[\302-\337]*/
+/*mb_utf8_literal=
        ({oxF4} {ox80_ox8F} {ox80_oxBF} {ox80_oxBF})
      | ({oxF1_oxF3} {ox80_oxBF} {ox80_oxBF} {ox80_oxBF})
      | ({oxF0} {ox90_0xBF} {ox80_oxBF} {ox80_oxBF})
@@ -44,7 +44,7 @@ mb_utf8_literal=
      | ({oxED} {ox80_ox9F} {ox80_oxBF})
      | ({oxE1_oxEC} {ox80_oxBF} {ox80_oxBF})
      | ({oxE0} {oxA0_oxBF} {ox80_oxBF})
-     | ({oxC2_oxDF} {ox80_oxBF})
+     | ({oxC2_oxDF} {ox80_oxBF})*/
 
 ascii_char_not_nl_slash_squote=[\000-\011\013-\046\050-\133\135-\177]
 
@@ -57,20 +57,26 @@ hex = [0-9a-fA-F]
 ID=[A-Za-z_][A-Za-z0-9_]* | "@\"" {STRING_CHAR}* \"
 BUILTIN_IDENTIFIER="@"[A-Za-z_][A-Za-z0-9_]*
 //CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nr\t\'\\\"]
-CHAR_ESCAPE=\\x{hex}{hex}|\\u\{{hex}+}|\\[nrt\'\\\"]
+ESCAPE_BACKSLASH="\\\\"
+ESCAPE_SINGLE_QUOTE="\\'"
+ESCAPE_LF="\\n"
+ESCAPE_TAB="\\t"
+ESCAPE_CR="\\r"
+ESCAPE_QUOTE="\\\""
+CHAR_ESCAPE={ESCAPE_BACKSLASH} | {ESCAPE_SINGLE_QUOTE} | {ESCAPE_LF} | {ESCAPE_TAB} | {ESCAPE_CR} | {ESCAPE_QUOTE} |\\x{hex}{hex}|\\u\{{hex}+}
 char_char=[a-zA-Z_\U0000A0-\U10ffff] | {CHAR_ESCAPE} | {ascii_char_not_nl_slash_squote}
 CHAR_LITERAL=\' {char_char} \'
-STRING_CHAR={CHAR_ESCAPE}|[^\"\n]
+STRING_CHAR=( [^\\\"] | \\[^] )
 STRING_LITERAL_SINGLE=\"{STRING_CHAR}*\"
 LINE_STRING=(\\\\ [^\n]* [ \n]*)+
 
-bin= [01]
+/*bin= [01]
 bin_= '_'? {bin}
 oct = [0-7]
 oct_ = '_'? {oct}
 hex_ = '_'? {hex}
 dec = [0-9]
-dec_ = '_'? {dec}
+dec_ = '_'? {dec}*/
 
 bin_int = [01] [01_]*
 oct_int = [0-7] [0-7_]*

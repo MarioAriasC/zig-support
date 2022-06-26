@@ -3,7 +3,17 @@
 # zig-support Changelog
 
 ## [Unreleased]
+### Added
+- Improved parser: 100% of the language is parsed correctly.
+- Insert closing pair match for `(`, `{`, `[` and `"`
+- Highlight `(`, `{` and `[` pairs
+- Introduce Live Templates for Zig:
+  - `import` -> Create an import using the `@import` function
+  - `sdp` -> Debug Print statement
+  - `sli` -> Log Info statement
 
+### Fixed
+- Fix issue [#15](https://github.com/MarioAriasC/zig-support/issues/15)
 ## [0.0.5]
 ### Fixed
 - Fix issue [#12](https://github.com/MarioAriasC/zig-support/issues/12)
@@ -40,5 +50,5 @@
 
 ### Known issues
 - There are still certain problems with the parser
-    - `\\` Line strings sometimes aren't parsed correctly.
+    - ~~`\\` Line strings sometimes aren't parsed correctly.~~. Fixed on version 0.0.6 
     - ~~`asm volatile` sometimes aren't parsed correctly.~~. Fixed on version 0.0.4
