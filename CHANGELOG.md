@@ -3,7 +3,17 @@
 # zig-support Changelog
 
 ## [Unreleased]
-
+### Added
+- More Live Templates for Zig:
+  - `St` -> `[]const u8`
+  - `tst` -> Creates a test: `test "" {}`
+  - `csd` -> Constant `Self` declaration: `const Self = @This();`
+  - `ced` -> Enum
+  - `cstd` -> Struct
+  - `fn0` -> Function without parameters
+  - `fn1` -> Function with one parameter
+  - `fn2` -> Function with two parameters
+- Support for the new IDEA platform version 2022.2 
 ## [0.0.6]
 ### Added
 - Improved parser: 100% of the language is parsed correctly.
