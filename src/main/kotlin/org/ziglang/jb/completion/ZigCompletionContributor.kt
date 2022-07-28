@@ -40,7 +40,7 @@ class ZigCompletionContributor : CompletionContributor() {
     }
 
     private val lookupLowerCase = { element: IElementType ->
-        val lowerCased = element.toString().toLowerCase()
+        val lowerCased = element.toString().lowercase()
         LookupElementBuilder
             .create(lowerCased)
             .withPresentableText(lowerCased)
