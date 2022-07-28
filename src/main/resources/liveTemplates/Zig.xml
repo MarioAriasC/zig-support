@@ -21,4 +21,56 @@
             <option name="ZIG_CODE" value="true"/>
         </context>
     </template>
+    <template description="String a.k.a []const u8" name="St" value="[]const u8">
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Test" name="tst" value="test &quot;$NAME$&quot; {$END$}">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Self declaration" name="csd" value="const Self = @This();">
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Enum declaration" name="ced" value="const $NAME$ = enum {$END$};">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Struct declaration" name="cstd" value="const $NAME$ = struct {$END$};">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Function declaration without parameters" name="fn0" value="fn $NAME$() $RETURN$ {$END$}">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="RETURN" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Function declaration with one parameter" name="fn1" value="fn $NAME$($PARAM1$) $RETURN$ {$END$}">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="PARAM1" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="RETURN" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
+    <template description="Function declaration with two parameters" name="fn2" value="fn $NAME$($PARAM1$, $PARAM2$) $RETURN$ {$END$}">
+        <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="PARAM1" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="PARAM2" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="RETURN" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="ZIG_CODE" value="true"/>
+        </context>
+    </template>
 </templateSet>
