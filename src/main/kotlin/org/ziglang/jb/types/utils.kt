@@ -77,8 +77,8 @@ fun ZigPrimaryTypeExpr.type(context: Context): Type? {
 fun ZigContainerDecl.type(context: Context): Type? {
     return context.cacheType(this) {
         when (firstChild?.firstChild?.text) {
-            ZigTypes.STRUCT.toString().lowercase() -> context.getStructType(this)
-            ZigTypes.ENUM.toString().lowercase() -> context.getEnumType(this)
+            ZigTypes.STRUCT.toString().toLowerCase() -> context.getStructType(this)
+            ZigTypes.ENUM.toString().toLowerCase() -> context.getEnumType(this)
             else -> null
         }
     }
