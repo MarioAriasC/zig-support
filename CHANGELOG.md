@@ -3,6 +3,8 @@
 # zig-support Changelog
 
 ## [Unreleased]
+
+## [0.0.7]
 ### Added
 - More Live Templates for Zig:
   - `St` -> `[]const u8`
@@ -13,7 +15,8 @@
   - `fn0` -> Function without parameters
   - `fn1` -> Function with one parameter
   - `fn2` -> Function with two parameters
-- Support for the new IDEA platform version 2022.2 
+- Support for the new IDEA platform version 2022.2
+
 ## [0.0.6]
 ### Added
 - Improved parser: 100% of the language is parsed correctly.
