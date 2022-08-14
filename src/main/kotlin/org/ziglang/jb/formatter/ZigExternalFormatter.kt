@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets
 
 private const val FMT = "fmt"
 
+private const val STDIN = "--stdin"
+
 class ZigExternalFormatter : AsyncDocumentFormattingService() {
     override fun getFeatures(): MutableSet<FormattingService.Feature> = mutableSetOf(
         FormattingService.Feature.FORMAT_FRAGMENTS,
@@ -25,11 +27,7 @@ class ZigExternalFormatter : AsyncDocumentFormattingService() {
 
     override fun createFormattingTask(request: AsyncFormattingRequest): FormattingTask? {
         val zigPath = ZigLang.zigPath ?: return null
-//        val context = request.context
-//        val project = context.project
-//        val file = context.virtualFile ?: return null;
-//        val ioFile = request.ioFile
-        val params = listOf(FMT, "--stdin")
+        val params = listOf(FMT, STDIN)
         val commandLine =
             GeneralCommandLine().withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.CONSOLE)
                 .withExePath(zigPath).withParameters(params)
