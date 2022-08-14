@@ -3,11 +3,13 @@
 # zig-support Changelog
 
 ## [Unreleased]
-### Added
 
+## [0.1.0]
+### Added
 - [#24](https://github.com/MarioAriasC/zig-support/issues/24) Use `zig fmt` to format `*.zig` files. You can use
   the `Reformat code` action (By default `Cmd/Ctrl + Alt + L`)
 - Updated to the latest JetBrain's IntelliJ platform plugin version.
+
 ## [0.0.7]
 ### Added
 - More Live Templates for Zig:
