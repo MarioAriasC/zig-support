@@ -1,9 +1,16 @@
 package org.ziglang.jb
 
+import com.intellij.execution.configurations.PathEnvironmentVariableUtil
 import com.intellij.lang.Language
 import org.ziglang.jb.reference.createLookup
 
 object ZigLang : Language("Zig") {
+    const val NOTIFICATION_GROUP_ID = "Zig"
+
+    val zigPath: String? by lazy {
+        PathEnvironmentVariableUtil.findInPath("zig")?.absolutePath
+    }
+
     val primitiveTypes = listOf(
         "i8",
         "u8",
