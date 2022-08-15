@@ -13,7 +13,7 @@ Support for the [Zig Programming Language](https://ziglang.org/)
 - Comment/Uncomment Zig code
 - Live templates
 ![](https://plugins.jetbrains.com/files/18062/screenshot_81e6aabc-b142-4061-98d0-6b9d44ba1b48)
-- Formatting using `zig fmt` (`Ctrl|Cmd` + `Alt` + `l`)
+- Formatting using `zig fmt` (<kbd>Ctrl|Cmd</kbd> + <kbd>Alt</kbd> + <kbd>l</kbd>)
 <!-- Plugin description end -->
 
 ## Installation
