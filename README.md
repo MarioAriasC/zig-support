@@ -9,11 +9,11 @@ Support for the [Zig Programming Language](https://ziglang.org/)
 
 ## Features
 - Basic language syntax rendering
-
 ![](https://plugins.jetbrains.com/files/18062/screenshot_17294790-9e20-4c5f-8d41-668bebef80d8)
 - Comment/Uncomment Zig code
 - Live templates
 ![](https://plugins.jetbrains.com/files/18062/screenshot_81e6aabc-b142-4061-98d0-6b9d44ba1b48)
+- Formatting using `zig fmt` (`Ctrl|Cmd` + `Alt` + `l`)
 <!-- Plugin description end -->
 
 ## Installation
