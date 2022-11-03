@@ -192,7 +192,7 @@ Symbol ::= ID {
 
 ContainerDecl ::= ContainerDeclAuto | PackedContainerDecl | ExternContainerDecl
 
-private PackedContainerDecl ::= PACKED ContainerDeclType LBRACE ContainerDocComment? ContainerMembers RBRACE {
+private PackedContainerDecl ::= PACKED (STRUCT (LPAREN Expr RPAREN) | ContainerDeclType) LBRACE ContainerDocComment? ContainerMembers RBRACE {
     pin = 1
 }
 
@@ -233,7 +233,7 @@ EqualExpr ::= EQUAL Expr {
     pin = 1
 }
 
-ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)? {
+ContainerField ::= DocComment? COMPTIME? ID (COLON TypeExpr ByteAlign?)? (EQUAL Expr)? {
     implements=['com.intellij.psi.PsiNameIdentifierOwner']
     mixin='org.ziglang.jb.reference.ContainerFieldMixin'
 }
@@ -338,7 +338,7 @@ WhileStatement ::= WhilePrefix BlockExpr (ELSE Payload? Statement)? | WhilePrefi
 
 SwitchExpr ::= SWITCH LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
 SwitchProngList ::= (SwitchProng COMMA)* SwitchProng?
-SwitchProng ::= SwitchCase EQUALRARROW PtrPayload? AssignExpr
+SwitchProng ::= INLINE? SwitchCase EQUALRARROW PtrPayload? AssignExpr
 SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
 SwitchItem ::= Expr (DOT3 Expr)?
 
