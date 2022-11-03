@@ -3,11 +3,14 @@
 # zig-support Changelog
 
 ## [Unreleased]
+
+## [0.2.0]
 ### Added
 - Support for Zig 0.10.0
   - `packed` structs with backing field, e.g.: `packed struct(i32)`
   - `inline` switch cases
-  - Remove `anytype` fields 
+  - Remove `anytype` fields
+
 ## [0.1.0]
 ### Added
 - [#24](https://github.com/MarioAriasC/zig-support/issues/24) Use `zig fmt` to format `*.zig` files. You can use
