@@ -338,7 +338,7 @@ WhileStatement ::= WhilePrefix BlockExpr (ELSE Payload? Statement)? | WhilePrefi
 
 SwitchExpr ::= SWITCH LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
 SwitchProngList ::= (SwitchProng COMMA)* SwitchProng?
-SwitchProng ::= SwitchCase EQUALRARROW PtrPayload? AssignExpr
+SwitchProng ::= INLINE? SwitchCase EQUALRARROW PtrPayload? AssignExpr
 SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
 SwitchItem ::= Expr (DOT3 Expr)?
 
