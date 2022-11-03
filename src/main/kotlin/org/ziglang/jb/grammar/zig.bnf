@@ -233,7 +233,7 @@ EqualExpr ::= EQUAL Expr {
     pin = 1
 }
 
-ContainerField ::= DocComment? COMPTIME? ID (COLON (ANY_TYPE|TypeExpr) ByteAlign?)? (EQUAL Expr)? {
+ContainerField ::= DocComment? COMPTIME? ID (COLON TypeExpr ByteAlign?)? (EQUAL Expr)? {
     implements=['com.intellij.psi.PsiNameIdentifierOwner']
     mixin='org.ziglang.jb.reference.ContainerFieldMixin'
 }
