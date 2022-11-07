@@ -5,7 +5,7 @@ import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
 import org.ziglang.jb.psi.ZigFnDecl
 import org.ziglang.jb.psi.ZigTopVarDecl
-import org.ziglang.jb.psi.psiTreeWalkupInsideBlock
+import org.ziglang.jb.psi.psiTreeWalkUpInsideBlock
 
 class ZigReference(element: PsiElement, private val id: PsiElement) : PsiPolyVariantReferenceBase<PsiElement>(element) {
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
@@ -14,7 +14,7 @@ class ZigReference(element: PsiElement, private val id: PsiElement) : PsiPolyVar
 
     private fun localVarResolve(): List<ResolveResult> {
         val refs = mutableListOf<ResolveResult>()
-        psiTreeWalkupInsideBlock(element) { named ->
+        psiTreeWalkUpInsideBlock(element) { named ->
             if (named.nameIdentifier?.text == id.text) {
                 refs.add(PsiElementResolveResult(named, true))
             }
@@ -46,7 +46,7 @@ class ZigReference(element: PsiElement, private val id: PsiElement) : PsiPolyVar
         val fns = collectByType<ZigFnDecl>()
         val vars = collectByType<ZigTopVarDecl>()
         val localVars = mutableListOf<PsiNameIdentifierOwner>()
-        psiTreeWalkupInsideBlock(element) { named ->
+        psiTreeWalkUpInsideBlock(element) { named ->
             localVars.add(named)
             false
         }

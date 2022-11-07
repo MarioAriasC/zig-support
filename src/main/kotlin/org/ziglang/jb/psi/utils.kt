@@ -30,7 +30,7 @@ fun findPsiElementByNameInsideFile(name: String, start: PsiElement): PsiElement?
 
 fun findPsiElementByNameInsideBlock(name: String, start: PsiElement): PsiElement? {
     var element: PsiElement? = null
-    psiTreeWalkupInsideBlock(start) { named ->
+    psiTreeWalkUpInsideBlock(start) { named ->
         if (named.nameIdentifier?.text == name) {
             element = named
             true
@@ -41,7 +41,7 @@ fun findPsiElementByNameInsideBlock(name: String, start: PsiElement): PsiElement
     return element
 }
 
-fun psiTreeWalkupInsideBlock(element: PsiElement, consumer: (PsiNameIdentifierOwner) -> Boolean) {
+fun psiTreeWalkUpInsideBlock(element: PsiElement, consumer: (PsiNameIdentifierOwner) -> Boolean) {
     var statement = PsiTreeUtil.findFirstParent(element) { parent -> parent is ZigStatement }
     while (statement != null) {
         var sibling = statement.prevSibling
@@ -74,7 +74,7 @@ fun findTopLevelTypes(element: PsiElement): List<PsiNameIdentifierOwner> {
 
 fun findTypesInsideBlock(start: PsiElement): List<PsiNameIdentifierOwner> {
     val types = mutableListOf<PsiNameIdentifierOwner>()
-    psiTreeWalkupInsideBlock(start) { named ->
+    psiTreeWalkUpInsideBlock(start) { named ->
         if (isElementAType(named)) {
             types.add(named)
         }
