@@ -20,11 +20,11 @@
         <liveTemplateContext implementation="org.ziglang.jb.editor.ZigCodeContextType"/>
         <!--Formatting-->
         <formattingService implementation="org.ziglang.jb.formatter.ZigExternalFormatter"/>
-        <!--<completion.contributor language="Zig"
-                                implementationClass="org.ziglang.jetbrains.completion.ZigCompletionContributor"/>
-        <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>
-        <annotator language="Zig" implementationClass="org.ziglang.jetbrains.ZigHighlightAnnotator"/>
-        <psi.referenceContributor language="Zig"
-                                  implementation="org.ziglang.jetbrains.reference.ZigReferenceContributor"/>-->
+        <completion.contributor language="Zig"
+                                implementationClass="org.ziglang.jb.completion.ZigCompletionContributor"/>
+<!--         <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>-->
+        <annotator language="Zig" implementationClass="org.ziglang.jb.ZigHighlightAnnotator"/>
+        <!--<psi.referenceContributor language="Zig"
+                                  implementation="org.ziglang.jb.reference.ZigReferenceContributor"/>-->
     </extensions>
 </idea-plugin>
