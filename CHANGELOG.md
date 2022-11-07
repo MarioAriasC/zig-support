@@ -3,9 +3,12 @@
 # zig-support Changelog
 
 ## [Unreleased]
+
+## [0.2.1]
 ### Added
 - Autocomplete builtin functions, i.e. `@functions`
 - Autocomplete primitive types
+
 ## [0.2.0]
 ### Added
 - Support for Zig 0.10.0
