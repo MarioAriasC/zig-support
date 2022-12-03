@@ -1,6 +1,7 @@
+import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -9,15 +10,17 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.kotlin.jvm") version "1.7.21"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.8.0"
+    id("org.jetbrains.intellij") version "1.10.0"
     // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "1.3.1"
+    id("org.jetbrains.changelog") version "2.0.0"
     // Gradle Qodana Plugin
     id("org.jetbrains.qodana") version "0.1.13"
+    // Gradle Kover Plugin
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
     // Grammar Kit
-    id("org.jetbrains.grammarkit") version "2021.1.3"
+    id("org.jetbrains.grammarkit") version "2021.2.2"
 }
 
 group = properties("pluginGroup")
@@ -35,9 +38,7 @@ sourceSets {
 }
 
 kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
+    jvmToolchain(11)
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -54,32 +55,37 @@ intellij {
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
-    version.set(properties("pluginVersion"))
+//    version.set(properties("pluginVersion"))
     groups.set(emptyList())
+    repositoryUrl.set(properties("pluginRepositoryUrl"))
 }
 
 // Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
 qodana {
-    cachePath.set(projectDir.resolve(".qodana").canonicalPath)
-    reportPath.set(projectDir.resolve("build/reports/inspections").canonicalPath)
+    cachePath.set(file(".qodana").canonicalPath)
+    reportPath.set(file("build/reports/inspections").canonicalPath)
     saveReport.set(true)
     showReport.set(System.getenv("QODANA_SHOW_REPORT").toBoolean())
 }
 
-// generate code
-val generateZigParser = task<GenerateParser>("generateZigParser") {
-    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.bnf"
-    targetRoot = "src/main/gen"
-    pathToParser = "/org/ziglang/jb/psi/parser/ZigParser.java"
-    pathToPsiRoot = "org/ziglang/jb/psi"
-    purgeOldFiles = true
+kover.xmlReport {
+    onCheck.set(true)
 }
 
-val generateZigLexer = task<GenerateLexer>("generateZigLexer") {
-    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.flex"
-    targetDir = "src/main/gen/org/ziglang/jb/lexer"
-    targetClass = "ZigLexer"
-    purgeOldFiles = true
+// generate code
+val generateZigParser = task<GenerateParserTask>("generateZigParser") {
+    source.set("src/main/kotlin/org/ziglang/jb/grammar/zig.bnf")
+    targetRoot.set("src/main/gen")
+    pathToParser.set("/org/ziglang/jb/psi/parser/ZigParser.java")
+    pathToPsiRoot.set("org/ziglang/jb/psi")
+    purgeOldFiles.set(true)
+}
+
+val generateZigLexer = task<GenerateLexerTask>("generateZigLexer") {
+    source.set("src/main/kotlin/org/ziglang/jb/grammar/zig.flex")
+    targetDir.set("src/main/gen/org/ziglang/jb/lexer")
+    targetClass.set("ZigLexer")
+    purgeOldFiles.set(true)
 }
 
 tasks {
@@ -95,7 +101,7 @@ tasks {
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription.set(
-            projectDir.resolve("README.md").readText().lines().run {
+            file("README.md").readText().lines().run {
                 val start = "<!-- Plugin description -->"
                 val end = "<!-- Plugin description end -->"
 
@@ -103,14 +109,14 @@ tasks {
                     throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                 }
                 subList(indexOf(start) + 1, indexOf(end))
-            }.joinToString("\n").run { markdownToHTML(this) }
+            }.joinToString("\n").let { markdownToHTML(it) }
         )
 
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider {
-            changelog.run {
-                getOrNull(properties("pluginVersion")) ?: getLatest()
-            }.toHTML()
+            with(changelog) {
+                renderItem(getOrNull(properties("pluginVersion")) ?: getLatest(), Changelog.OutputType.HTML)
+            }
         })
     }
 
