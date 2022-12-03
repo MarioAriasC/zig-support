@@ -5,6 +5,7 @@
 ## [Unreleased]
 ### Added
 - Support for the new IDEA platform version 2022.3
+
 ## [0.2.1]
 ### Added
 - Autocomplete builtin functions, i.e. `@functions`
