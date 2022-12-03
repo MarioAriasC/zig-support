@@ -1,7 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -20,7 +20,7 @@ plugins {
     // Gradle Kover Plugin
     id("org.jetbrains.kotlinx.kover") version "0.6.1"
     // Grammar Kit
-    id("org.jetbrains.grammarkit") version "2021.1.3"
+    id("org.jetbrains.grammarkit") version "2021.2.2"
 }
 
 group = properties("pluginGroup")
@@ -73,19 +73,19 @@ kover.xmlReport {
 }
 
 // generate code
-val generateZigParser = task<GenerateParser>("generateZigParser") {
-    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.bnf"
-    targetRoot = "src/main/gen"
-    pathToParser = "/org/ziglang/jb/psi/parser/ZigParser.java"
-    pathToPsiRoot = "org/ziglang/jb/psi"
-    purgeOldFiles = true
+val generateZigParser = task<GenerateParserTask>("generateZigParser") {
+    source.set("src/main/kotlin/org/ziglang/jb/grammar/zig.bnf")
+    targetRoot.set("src/main/gen")
+    pathToParser.set("/org/ziglang/jb/psi/parser/ZigParser.java")
+    pathToPsiRoot.set("org/ziglang/jb/psi")
+    purgeOldFiles.set(true)
 }
 
-val generateZigLexer = task<GenerateLexer>("generateZigLexer") {
-    source = "src/main/kotlin/org/ziglang/jb/grammar/zig.flex"
-    targetDir = "src/main/gen/org/ziglang/jb/lexer"
-    targetClass = "ZigLexer"
-    purgeOldFiles = true
+val generateZigLexer = task<GenerateLexerTask>("generateZigLexer") {
+    source.set("src/main/kotlin/org/ziglang/jb/grammar/zig.flex")
+    targetDir.set("src/main/gen/org/ziglang/jb/lexer")
+    targetClass.set("ZigLexer")
+    purgeOldFiles.set(true)
 }
 
 tasks {
