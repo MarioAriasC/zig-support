@@ -10,9 +10,9 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.7.21"
+    id("org.jetbrains.kotlin.jvm") version "1.8.0"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.10.0"
+    id("org.jetbrains.intellij") version "1.12.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "2.0.0"
     // Gradle Qodana Plugin
@@ -115,7 +115,10 @@ tasks {
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider {
             with(changelog) {
-                renderItem(getOrNull(properties("pluginVersion")) ?: getLatest(), Changelog.OutputType.HTML)
+                renderItem(
+                    getOrNull(properties("pluginVersion")) ?: runCatching { getLatest() }.getOrElse { getUnreleased() },
+                    Changelog.OutputType.HTML
+                )
             }
         })
     }
