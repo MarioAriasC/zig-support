@@ -137,14 +137,14 @@ FnDecl ::= PUB? (EXPORT | EXTERN STRING_LITERAL_SINGLE? | (INLINE | NOINLINE))? 
     mixin='org.ziglang.jb.reference.FnMixin'
 }
 
-FnProto ::= FN ID? LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK? TypeExpr {
+FnProto ::= FN ID? ParamDeclList ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK? TypeExpr {
     pin = 'ID'
 }
 ByteAlign ::= ALIGN LPAREN Expr RPAREN
 LinkSection ::= LINKSECTION LPAREN Expr RPAREN
 CallConv ::= CALLCONV LPAREN Expr RPAREN
 
-ParamDeclList ::= (ParamDecl COMMA)* ParamDecl?
+ParamDeclList ::= LPAREN (ParamDecl COMMA)* ParamDecl? RPAREN
 ParamDecl ::= DocComment? (NOALIAS | COMPTIME)? (ID COLON)? ParamType | DOT3
 ParamType ::= ANY_TYPE | TypeExpr
 private TypeExpr ::= PrefixTypeOp* ErrorUnionExpr
