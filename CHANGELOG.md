@@ -3,7 +3,10 @@
 # zig-support Changelog
 
 ## [Unreleased]
-
+### Added
+- Support for the new IDEA platform version 2023.1
+- Some auto-completions have new icons
+- Background work to support features for new versions
 ## [0.2.2] - 2022-12-03
 
 ### Added
