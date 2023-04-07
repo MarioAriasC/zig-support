@@ -17,12 +17,16 @@
 
         <!--Live templates-->
         <defaultLiveTemplates file="liveTemplates/Zig"/>
-        <liveTemplateContext implementation="org.ziglang.jb.editor.ZigCodeContextType"/>
+        <liveTemplateContext implementation="org.ziglang.jb.editor.ZigCodeContextType" contextId="ZIG_CODE"/>
         <!--Formatting-->
         <formattingService implementation="org.ziglang.jb.formatter.ZigExternalFormatter"/>
         <completion.contributor language="Zig"
                                 implementationClass="org.ziglang.jb.completion.ZigCompletionContributor"/>
-<!--         <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>-->
+        <!--<completion.contributor language="Zig"
+                                implementationClass="org.ziglang.jb.completion.ZigKeywordCompletionContributor"
+                                id="ZigKeywordCompletionContributor"/>-->
+
+        <!--         <programRunner implementation="org.ziglang.jetbrains.runner.ZigRunner"/>-->
         <annotator language="Zig" implementationClass="org.ziglang.jb.ZigHighlightAnnotator"/>
         <!--<psi.referenceContributor language="Zig"
                                   implementation="org.ziglang.jb.reference.ZigReferenceContributor"/>-->

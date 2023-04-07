@@ -4,6 +4,7 @@ import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.lookup.AutoCompletionPolicy
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.icons.AllIcons
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.ObjectPattern
 import com.intellij.patterns.PatternCondition
@@ -18,6 +19,7 @@ import org.ziglang.jb.ZigLang
 import org.ziglang.jb.psi.ZigFile
 import org.ziglang.jb.psi.ZigTypes
 import org.ziglang.jb.psi.leftSiblings
+import javax.swing.Icon
 
 class ZigCompletionContributor : CompletionContributor() {
 
@@ -36,6 +38,16 @@ class ZigCompletionContributor : CompletionContributor() {
         LookupElementBuilder
             .create("$keyword ")
             .withPresentableText(keyword.toString())
+            .withIcon(ZigIcons.icon)
+            .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+    }
+
+    private fun lookupLowerCase(icon: Icon) = { element: IElementType ->
+        val lowerCased = element.toString().lowercase()
+        LookupElementBuilder
+            .create(lowerCased)
+            .withPresentableText(lowerCased)
+            .withIcon(icon)
             .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
     }
 
@@ -54,14 +66,14 @@ class ZigCompletionContributor : CompletionContributor() {
         ZigTypes.UNION,
         ZigTypes.EXTERN,
         ZigTypes.PACKED
-    ).map(lookupLowerCase)
+    ).map(lookupLowerCase(AllIcons.Nodes.Type))
 
     private val containerAutoDecl = listOf(
         ZigTypes.STRUCT,
         ZigTypes.ENUM,
         ZigTypes.OPAQUE,
         ZigTypes.UNION,
-    ).map(lookupLowerCase)
+    ).map(lookupLowerCase(AllIcons.Nodes.Type))
 
     private val builtinFunctions = ZigLang.builtInFunctions.map { fn ->
         LookupElementBuilder.create("$fn(")
@@ -107,7 +119,7 @@ class ZigCompletionContributor : CompletionContributor() {
         predicate: (T) -> Boolean
     ): Self =
         with(object : PatternCondition<T>(name) {
-            override fun accepts(t: T, context: ProcessingContext?): Boolean = predicate(t)
+            override fun accepts(t: T & Any, context: ProcessingContext?): Boolean = predicate(t)
         })
 
     private fun <T : PsiElement, Self : PsiElementPattern<T, Self>> PsiElementPattern<T, Self>.withPreviousSiblingsSkipping(
