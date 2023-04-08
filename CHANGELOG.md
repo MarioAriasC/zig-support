@@ -7,6 +7,7 @@
 - Support for the new IDEA platform version 2023.1
 - Some auto-completions have new icons
 - Background work to support features for new versions
+- Fix building process by updating images to Java 17
 ## [0.2.2] - 2022-12-03
 
 ### Added
