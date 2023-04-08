@@ -3,11 +3,15 @@
 # zig-support Changelog
 
 ## [Unreleased]
+
+## [0.2.4] - 2023-04-08
+
 ### Added
 - Support for the new IDEA platform version 2023.1
 - Some auto-completions have new icons
 - Background work to support features for new versions
 - Fix building process by updating images to Java 17
+
 ## [0.2.2] - 2022-12-03
 
 ### Added
@@ -102,7 +106,8 @@
 - - ~~`\\` Line strings sometimes aren't parsed correctly.~~. Fixed on version 0.0.6 
     - ~~`asm volatile` sometimes aren't parsed correctly.~~. Fixed on version 0.0.4
 
-[Unreleased]: https://github.com/MarioAriasC/zig-support/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/MarioAriasC/zig-support/compare/v0.2.4...HEAD
+[0.2.4]: https://github.com/MarioAriasC/zig-support/compare/v0.2.2...v0.2.4
 [0.2.2]: https://github.com/MarioAriasC/zig-support/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/MarioAriasC/zig-support/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/MarioAriasC/zig-support/compare/v0.1.0...v0.2.0
