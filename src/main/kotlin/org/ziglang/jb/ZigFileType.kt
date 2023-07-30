@@ -14,7 +14,7 @@ object ZigFileType : LanguageFileType(ZigLang) {
 
     override fun getIcon(): Icon = ZigIcons.file
 
-    override fun getCharset(file: VirtualFile, content: ByteArray?): String = CHARSET
+    override fun getCharset(file: VirtualFile, content: ByteArray): String = CHARSET
     
     private const val CHARSET = "UTF-8"
 }

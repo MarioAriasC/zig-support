@@ -11,18 +11,12 @@ fun environment(key: String) = providers.environmentVariable(key)
 plugins {
     // Java support
     id("java")
-    // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.8.10"
-    // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.13.2"
-    // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "2.0.0"
-    // Gradle Qodana Plugin
-    id("org.jetbrains.qodana") version "0.1.13"
-    // Gradle Kover Plugin
-    id("org.jetbrains.kotlinx.kover") version "0.6.1"
-    // Grammar Kit
-    id("org.jetbrains.grammarkit") version "2021.2.2"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.gradleIntelliJPlugin)
+    alias(libs.plugins.changelog)
+    alias(libs.plugins.qodana)
+    alias(libs.plugins.kover)
+    alias(libs.plugins.grammarkit)
 }
 
 group = properties("pluginGroup").get()
@@ -70,13 +64,17 @@ qodana {
     showReport.set(environment("QODANA_SHOW_REPORT").map(String::toBoolean).getOrElse(false))
 }
 
-kover.xmlReport {
-    onCheck.set(true)
+koverReport {
+    defaults {
+        xml {
+            onCheck = true
+        }
+    }
 }
 
 // generate code
 val generateZigParser = task<GenerateParserTask>("generateZigParser") {
-    source.set("src/main/kotlin/org/ziglang/jb/grammar/zig.bnf")
+    sourceFile.set(file("src/main/kotlin/org/ziglang/jb/grammar/zig.bnf"))
     targetRoot.set("src/main/gen")
     pathToParser.set("/org/ziglang/jb/psi/parser/ZigParser.java")
     pathToPsiRoot.set("org/ziglang/jb/psi")
@@ -84,7 +82,7 @@ val generateZigParser = task<GenerateParserTask>("generateZigParser") {
 }
 
 val generateZigLexer = task<GenerateLexerTask>("generateZigLexer") {
-    source.set("src/main/kotlin/org/ziglang/jb/grammar/zig.flex")
+    sourceFile.set(file("src/main/kotlin/org/ziglang/jb/grammar/zig.flex"))
     targetDir.set("src/main/gen/org/ziglang/jb/lexer")
     targetClass.set("ZigLexer")
     purgeOldFiles.set(true)
