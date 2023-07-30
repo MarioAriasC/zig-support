@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.2.5] - 2023-07-30
+
 ### Added
 - Support for the new IDEA platform version 2023.2
 - Updated to the latest JetBrain's IntelliJ platform plugin version.
@@ -110,7 +112,8 @@
 - - ~~`\\` Line strings sometimes aren't parsed correctly.~~. Fixed on version 0.0.6 
     - ~~`asm volatile` sometimes aren't parsed correctly.~~. Fixed on version 0.0.4
 
-[Unreleased]: https://github.com/MarioAriasC/zig-support/compare/v0.2.4...HEAD
+[Unreleased]: https://github.com/MarioAriasC/zig-support/compare/v0.2.5...HEAD
+[0.2.5]: https://github.com/MarioAriasC/zig-support/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/MarioAriasC/zig-support/compare/v0.2.2...v0.2.4
 [0.2.2]: https://github.com/MarioAriasC/zig-support/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/MarioAriasC/zig-support/compare/v0.2.0...v0.2.1
