@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Added
+- Support for the new IDEA platform version 2023.2
+- Updated to the latest JetBrain's IntelliJ platform plugin version.
+
 ## [0.2.4] - 2023-04-08
 
 ### Added
