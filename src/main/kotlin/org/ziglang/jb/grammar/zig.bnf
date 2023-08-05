@@ -342,11 +342,14 @@ SwitchProng ::= INLINE? SwitchCase EQUALRARROW PtrPayload? AssignExpr
 SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
 SwitchItem ::= Expr (DOT3 Expr)?
 
-ForPrefix ::= FOR LPAREN Expr RPAREN PtrIndexPayload
+ForRange ::= Expr DOT2 Expr?
+ForOperand ::= ForRange | Expr
+
+ForPrefix ::= FOR LPAREN (ForOperand COMMA)* ForOperand RPAREN PtrIndexPayload
 WhilePrefix ::= WHILE LPAREN Expr RPAREN PtrPayload? WhileContinueExpr?
 
 WhileContinueExpr ::= COLON LPAREN AssignExpr RPAREN
-PtrIndexPayload ::= PIPE ASTERISK? ID (COMMA ID)? PIPE
+PtrIndexPayload ::= PIPE (ASTERISK? ID COMMA)* (ASTERISK? ID) PIPE
 
 BlockExprStatement ::= BlockExpr | AssignExpr SEMICOLON
 AssignExpr ::= Expr (AssignOp Expr)?
