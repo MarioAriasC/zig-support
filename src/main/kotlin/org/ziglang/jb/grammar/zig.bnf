@@ -206,6 +206,12 @@ private ContainerDeclAuto ::= ContainerDeclType LBRACE ContainerDocComment? Cont
 
 ContainerDeclType ::= STRUCT | OPAQUE | ENUM (LPAREN Expr RPAREN)? | UNION (LPAREN (ENUM (LPAREN Expr RPAREN)? | Expr) RPAREN)?
 
+/*
+TypedTupleDecl ::= STRUCT LBRACE (TypeExpr COMMA)* TypeExpr RBRACE {
+    pin = 1
+}
+*/
+
 ErrorSetDecl ::= ERROR LBRACE IdentifierList RBRACE
 
 GroupedExpr ::= LPAREN Expr RPAREN
