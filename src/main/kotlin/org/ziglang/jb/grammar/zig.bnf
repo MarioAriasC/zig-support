@@ -206,6 +206,12 @@ private ContainerDeclAuto ::= ContainerDeclType LBRACE ContainerDocComment? Cont
 
 ContainerDeclType ::= STRUCT | OPAQUE | ENUM (LPAREN Expr RPAREN)? | UNION (LPAREN (ENUM (LPAREN Expr RPAREN)? | Expr) RPAREN)?
 
+/*
+TypedTupleDecl ::= STRUCT LBRACE (TypeExpr COMMA)* TypeExpr RBRACE {
+    pin = 1
+}
+*/
+
 ErrorSetDecl ::= ERROR LBRACE IdentifierList RBRACE
 
 GroupedExpr ::= LPAREN Expr RPAREN
@@ -342,11 +348,14 @@ SwitchProng ::= INLINE? SwitchCase EQUALRARROW PtrPayload? AssignExpr
 SwitchCase ::= SwitchItem (COMMA SwitchItem)* COMMA? | ELSE
 SwitchItem ::= Expr (DOT3 Expr)?
 
-ForPrefix ::= FOR LPAREN Expr RPAREN PtrIndexPayload
+ForRange ::= Expr DOT2 Expr?
+ForOperand ::= ForRange | Expr
+
+ForPrefix ::= FOR LPAREN (ForOperand COMMA)* ForOperand RPAREN PtrIndexPayload
 WhilePrefix ::= WHILE LPAREN Expr RPAREN PtrPayload? WhileContinueExpr?
 
 WhileContinueExpr ::= COLON LPAREN AssignExpr RPAREN
-PtrIndexPayload ::= PIPE ASTERISK? ID (COMMA ID)? PIPE
+PtrIndexPayload ::= PIPE (ASTERISK? ID COMMA)* (ASTERISK? ID) PIPE
 
 BlockExprStatement ::= BlockExpr | AssignExpr SEMICOLON
 AssignExpr ::= Expr (AssignOp Expr)?

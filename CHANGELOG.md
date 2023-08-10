@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Added
+- Initial support for 0.11.0 release:
+  - Multi-object For Loops
+  - New builtins
+  - Rename Casting Builtins
 ## [0.2.5] - 2023-07-30
 
 ### Added
