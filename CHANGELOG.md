@@ -4,11 +4,14 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2023-08-10
+
 ### Added
 - Initial support for 0.11.0 release:
   - Multi-object For Loops
   - New builtins
   - Rename Casting Builtins
+
 ## [0.2.5] - 2023-07-30
 
 ### Added
@@ -117,7 +120,8 @@
 - - ~~`\\` Line strings sometimes aren't parsed correctly.~~. Fixed on version 0.0.6 
     - ~~`asm volatile` sometimes aren't parsed correctly.~~. Fixed on version 0.0.4
 
-[Unreleased]: https://github.com/MarioAriasC/zig-support/compare/v0.2.5...HEAD
+[Unreleased]: https://github.com/MarioAriasC/zig-support/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/MarioAriasC/zig-support/compare/v0.2.5...v0.3.0
 [0.2.5]: https://github.com/MarioAriasC/zig-support/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/MarioAriasC/zig-support/compare/v0.2.2...v0.2.4
 [0.2.2]: https://github.com/MarioAriasC/zig-support/compare/v0.2.1...v0.2.2
