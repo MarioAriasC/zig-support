@@ -7,6 +7,16 @@
 <!-- Plugin description -->
 Support for the [Zig Programming Language](https://ziglang.org/)
 
+## _Warning_
+
+This project is discontinued. Any developement of bug fixing stopped around August 2023. 
+
+I reccomend you to migrate [ZigBrains](https://plugins.jetbrains.com/plugin/22456-zigbrains) ([GitHub](https://github.com/Falsepattern/Zigbrains)). 
+
+ZigBrains has more features and integrates ZLS.  
+
+I'm contributing sporadically to ZigBrains development.  
+
 ## Features
 - Basic language syntax rendering
 ![](https://plugins.jetbrains.com/files/18062/screenshot_17294790-9e20-4c5f-8d41-668bebef80d8)
